@@ -13,7 +13,7 @@ The Pole Proximity Android SDK is a library for Android OS that provides develop
 1. Add Gradle dependency into your app's `build.config`
 ``` jitpack
 dependencies {
-    compile 'com.github.poletalks:Pole-Beacon-Android-SDK:0.0'
+    compile 'com.github.poletalks:Pole-Beacon-Android-SDK:0.1'
 }
 ```
 
@@ -48,7 +48,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    PoleProximityManager.onCreateBeacons(this, api_key, user_id);
+    PoleProximityManager.onCreateBeacons(this, user_id);
 }
 
 

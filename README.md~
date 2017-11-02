@@ -20,11 +20,11 @@ dependencies {
 2. Add it in your root build.gradle at the end of repositories:
 ``` jitpack
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+	    ...
+	    maven { url 'https://jitpack.io' }
+    }
+}
 ```
 
 3. Add necessary permissions into your `AndroidManifest`
@@ -60,13 +60,6 @@ protected void onStart() {
 }
 
 @Override
-protected void onStop() {
-    super.onStop();
-
-    PoleProximityManager.stopScanning();
-}
-
-@Override
 protected void onDestroy() {
     super.onDestroy();
 
@@ -94,7 +87,7 @@ send [senderId](https://firebase.google.com/docs/cloud-messaging/concept-options
 
     ```
     refreshedToken = FirebaseInstanceId.getInstance().getToken("YOUR_SENDERID", "FCM");
-    PoleNotificationService.getToken(FirebaseInstanceId.getInstance());
+    PoleNotificationService.getToken(FirebaseInstanceId.getInstance(), mContext);
 
     ```
 

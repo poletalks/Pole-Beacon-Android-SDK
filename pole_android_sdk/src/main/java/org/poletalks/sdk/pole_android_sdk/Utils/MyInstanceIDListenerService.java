@@ -41,13 +41,16 @@ public class MyInstanceIDListenerService extends FirebaseInstanceIdService {
 
         String refreshedToken = null;
         try {
-            refreshedToken = FirebaseInstanceId.getInstance().getToken("732877727331", "FCM");
+            refreshedToken = FirebaseInstanceId.getInstance().getToken(Config.fcm_sender_id, "FCM");
+
+            Log.d("MyInstanceId", "sdk:Refreshed token: " + refreshedToken);
+            // TODO: Implement this method to send any registration to your app's servers.
+            PoleNotificationService.sendRegistrationToServer(refreshedToken, this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("MyInstanceId", "sdk:Refreshed token: " + refreshedToken);
-        // TODO: Implement this method to send any registration to your app's servers.
-        sendRegistrationToServer(refreshedToken);
+
     }
 
 

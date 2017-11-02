@@ -22,7 +22,18 @@ import com.kontakt.sdk.android.common.KontaktSDK;
 import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
+import org.poletalks.sdk.pole_android_sdk.Model.CommonResponse;
 import org.poletalks.sdk.pole_android_sdk.Model.Queue;
+import org.poletalks.sdk.pole_android_sdk.Model.UserProfile;
+import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.ApiInterface;
+import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.RetrofitConfig;
+import org.poletalks.sdk.pole_android_sdk.Utils.CheckNetwork;
+import org.poletalks.sdk.pole_android_sdk.Utils.Config;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by anjal on 10/30/17.
@@ -36,20 +47,55 @@ public class PoleProximityManager {
     private static DatabaseReference mFirebaseHistoryReference;
     private static SharedPreferences polePref;
 
-    public static void onCreateBeacons(Context context, String beacons_id, String uid){
+    public static void onCreateBeacons(Context context, String uid){
         mContext= context;
-        KontaktSDK.initialize(beacons_id);
-
-        polePref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-
-        if (uid != null){
-            SharedPreferences.Editor editor = polePref.edit();
-            editor.putString("uid", uid);
-            editor.apply();
-        }
+        KontaktSDK.initialize(Config.kontakt_api_key);
 
         proximityManager = ProximityManagerFactory.create(mContext);
         proximityManager.setEddystoneListener(createEddystoneListener(mContext));
+
+        registerUser(context, uid);
+    }
+
+    private static void registerUser(Context context, String uid) {
+        final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
+        String fcm_token = pref.getString("fcm_token", null);
+
+        if (fcm_token != null && uid != null && pref.getBoolean("is_fcm_token_changed", true)){
+            if (CheckNetwork.isInternetAvailable(context))
+            {
+                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+                Retrofit retro = retrofitConfig.getRetro();
+                ApiInterface setprofile = retro.create(ApiInterface.class);
+                UserProfile user = new UserProfile();
+
+                user.setClientapp_name("hubilo");
+                user.setClientapp_uid(uid);
+                user.setDevice_type("ANDROID");
+                user.setFcm_token(fcm_token);
+
+                Call<CommonResponse> call = setprofile.setProfile(user);
+                call.enqueue(new Callback<CommonResponse>()
+                {
+                    @Override
+                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
+                    {
+                        if (response.code() == 200){
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putBoolean("is_fcm_token_changed", false);
+                            editor.apply();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonResponse> call, Throwable t)
+                    {
+                        Log.e("FCM", "onFailure::liketweet-" + t.toString());
+                    }
+                });
+            }
+        }
+
     }
 
 
