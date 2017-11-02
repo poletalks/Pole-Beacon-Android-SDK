@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="ToolBarWithNavigationBack">
+        <item name="navigationIcon">@drawable/ic_arrow_left_back_24dp</item>
+    </style>
+
+    <style name="EdittextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">#919eab</item>
+        <item name="colorControlActivated">#919eab</item>
+        <item name="colorControlHighlight">#919eab</item>
+    </style>
+
+</resources>

@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "732877727331",
+    "firebase_url": "https://pole-beacons.firebaseio.com",
+    "project_id": "pole-beacons",
+    "storage_bucket": "pole-beacons.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732877727331:android:2bace2a3d15056c0",
+        "android_client_info": {
+          "package_name": "org.poletalks.sdk.pole_android_sdk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732877727331-p06m7mstc5cc5btd1gj3vojgctum5ocg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732877727331:android:22fbecb3360c4e0f",
+        "android_client_info": {
+          "package_name": "org.poletalks.sdk.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732877727331-p06m7mstc5cc5btd1gj3vojgctum5ocg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

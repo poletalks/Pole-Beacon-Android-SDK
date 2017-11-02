@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pole-beacon-sdk.iml" filepath="$PROJECT_DIR$/pole-beacon-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pole_android_sdk/pole_android_sdk.iml" filepath="$PROJECT_DIR$/pole_android_sdk/pole_android_sdk.iml" />
+    </modules>
+  </component>
+</project>
