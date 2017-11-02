@@ -18,7 +18,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import org.poletalks.sdk.pole_android_sdk.FeedbackActivity;
 import org.poletalks.sdk.pole_android_sdk.Model.Queue;
-import org.poletalks.sdk.pole_android_sdk.PoleProximityManager;
 import org.poletalks.sdk.pole_android_sdk.R;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class PoleNotificationService {
     public static String getToken(FirebaseInstanceId firebaseInstanceId, Context context) {
         String refreshedToken = null;
         try {
-            refreshedToken = firebaseInstanceId.getToken("732877727331", "FCM");
+            refreshedToken = firebaseInstanceId.getToken(Config.fcm_sender_id, "FCM");
             Log.d("MyInstanceId", "sdk:Refreshed token: " + refreshedToken);
             sendRegistrationToServer(refreshedToken, context);
         } catch (IOException e) {
@@ -43,35 +42,19 @@ public class PoleNotificationService {
         return (refreshedToken);
     }
 
-    private static void sendRegistrationToServer(String refreshedToken, Context context) {
+    public static void sendRegistrationToServer(String refreshedToken, Context context) {
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-        String fcm_token = pref.getString("fcm_token", "none");
 
-        setInFirebase("fcm_token", "sdsdsf", 3434, true, context);
+        if (!pref.getString("fcm_token", "none").equals(refreshedToken)) {
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("fcm_token", refreshedToken);
+            editor.putBoolean("is_fcm_token_changed", true);
+            editor.apply();
+        }
 
-//        if (CheckNetwork.isInternetAvailable(getApplicationContext()))
-//        {
-//            RetrofitConfig retrofitConfig = new RetrofitConfig(getApplicationContext());
-//            Retrofit retro = retrofitConfig.getRetro();
-//            ApiInterface setprofile = retro.create(ApiInterface.class);
-//            UserProfile user = new UserProfile();
-//            user.setGcm(refreshedToken);
-//            Call<SetProfileResponse> call = setprofile.setProfile(user);
-//            call.enqueue(new Callback<SetProfileResponse>()
-//            {
-//                @Override
-//                public void onResponse(Call<SetProfileResponse> call, Response<SetProfileResponse> response)
-//                {
-//                    Log.e("FCM", String.valueOf(response.code()));
-//                }
-//
-//                @Override
-//                public void onFailure(Call<SetProfileResponse> call, Throwable t)
-//                {
-//                    Log.e("FCM", "onFailure::liketweet-" + t.toString());
-//                }
-//            });
-//        }
+        setInFirebase("fcm_token", refreshedToken, 3434, true, context);
+        Log.e("fcm_token", refreshedToken);
+
     }
 
     public static boolean onMessageReceived(RemoteMessage message, Context mContext) {
@@ -108,7 +91,7 @@ public class PoleNotificationService {
     }
 
     private static void createNotification(String title, String content, Context mContext) {
-        setInFirebase("getnotification", "sdsdsf", 3434, true, mContext);
+        setInFirebase("getnotification", "nofification kitti", 3434, true, mContext);
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
             Intent resultIntent = new Intent(mContext, FeedbackActivity.class);

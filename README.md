@@ -48,7 +48,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    PoleProximityManager.onCreateBeacons(this, api_key, user_id);
+    PoleProximityManager.onCreateBeacons(this, user_id);
 }
 
 

@@ -7,14 +7,14 @@ package org.poletalks.sdk.pole_android_sdk.Model;
 
 public class Queue {
     private String beacon_id, user_id;
-    private boolean isEnter;
+    private boolean enter;
     private double time, distance;
 
     public Queue(String beacon_id, String user_id, double distance, boolean isEnter) {
         this.beacon_id = beacon_id;
         this.user_id = user_id;
         this.distance = distance;
-        this.isEnter = isEnter;
+        this.enter = isEnter;
         this.time = System.currentTimeMillis()/1000;
     }
 
@@ -43,11 +43,11 @@ public class Queue {
     }
 
     public boolean is_enter() {
-        return isEnter;
+        return enter;
     }
 
     public void setIs_enter(boolean is_enter) {
-        this.isEnter = is_enter;
+        this.enter = is_enter;
     }
 
     public double getTime() {
