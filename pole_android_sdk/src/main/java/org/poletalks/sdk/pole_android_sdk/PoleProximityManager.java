@@ -123,11 +123,9 @@ public class PoleProximityManager {
         });
     }
 
-    public static void stopScanning() {
-        proximityManager.stopScanning();
-    }
 
     public static void destroyScanning() {
+        proximityManager.stopScanning();
         proximityManager.disconnect();
         proximityManager = null;
     }
