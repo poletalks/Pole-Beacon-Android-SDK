@@ -104,7 +104,11 @@ send [senderId](https://firebase.google.com/docs/cloud-messaging/concept-options
     }
     ```
 
+9. Set User info
 
+    ```
+    PoleProximityManager.setUserInfo(JSONObject userData);
+    ```
 
 Pole Contact:
 ===========
