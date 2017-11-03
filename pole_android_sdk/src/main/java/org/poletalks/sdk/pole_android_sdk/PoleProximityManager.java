@@ -121,9 +121,9 @@ public class PoleProximityManager {
 
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId("1:732877727331:android:2bace2a3d15056c0") // Required for Analytics.
-                .setApiKey("AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0") // Required for Auth.
-                .setDatabaseUrl("https://pole-beacons.firebaseio.com/") // Required for RTDB.
+                .setApplicationId(Config.firebase_application_id) // Required for Analytics.
+                .setApiKey(Config.firebase_api_key) // Required for Auth.
+                .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
                 .build();
 
         // Initialize with secondary app.

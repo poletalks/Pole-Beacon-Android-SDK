@@ -85,20 +85,26 @@ public class PoleNotificationService {
     }
 
     private static void setInFirebase(String name, String beacon_id, double distance, boolean isEnter, Context context) {
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId("1:732877727331:android:2bace2a3d15056c0") // Required for Analytics.
-                .setApiKey("AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0") // Required for Auth.
-                .setDatabaseUrl("https://pole-beacons.firebaseio.com/") // Required for RTDB.
-                .build();
 
-        // Initialize with secondary app.
-        FirebaseApp.initializeApp(context /* Context */, options, "secondary");
+        FirebaseDatabase secondaryDatabase;
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
+                    .setApiKey(Config.firebase_api_key) // Required for Auth.
+                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
+                    .build();
 
-        // Retrieve secondary app.
-        FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+            // Initialize with secondary app.
+            FirebaseApp.initializeApp(context /* Context */, options, "secondary");
 
-        // Get the database for the other app.
-        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+            // Retrieve secondary app.
+            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+
+            // Get the database for the other app.
+            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        } catch (Exception e){
+            secondaryDatabase = FirebaseDatabase.getInstance();
+        }
 
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("uid", "none");

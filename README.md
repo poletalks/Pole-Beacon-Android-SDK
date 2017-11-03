@@ -77,7 +77,7 @@ buildscript {
 }
 ```
 
-8. If Firebase is already useing in project for cloud messaging. else ignore.
+8. If Firebase is already using in project for cloud messaging. else ignore.
 
     [Receiving messages from multiple senders](https://firebase.google.com/docs/cloud-messaging/concept-options#receiving-messages-from-multiple-senders). When requesting registration 
 send [senderId](https://firebase.google.com/docs/cloud-messaging/concept-options#senderid)

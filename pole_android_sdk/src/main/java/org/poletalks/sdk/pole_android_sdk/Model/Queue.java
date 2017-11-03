@@ -1,12 +1,15 @@
 package org.poletalks.sdk.pole_android_sdk.Model;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by anjal on 21/4/17.
  */
 
 public class Queue {
-    private String beacon_id, user_id;
+    private String beacon_id, user_id, timeString;
     private boolean enter;
     private double time, distance;
 
@@ -16,6 +19,27 @@ public class Queue {
         this.distance = distance;
         this.enter = isEnter;
         this.time = System.currentTimeMillis()/1000;
+
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM hh:mm aa");
+        Date date = new Date(System.currentTimeMillis());
+        this.timeString = df.format(date);
+
+    }
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public void setTimeString(String timeString) {
+        this.timeString = timeString;
+    }
+
+    public boolean isEnter() {
+        return enter;
+    }
+
+    public void setEnter(boolean enter) {
+        this.enter = enter;
     }
 
     public double getDistance() {
@@ -40,14 +64,6 @@ public class Queue {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public boolean is_enter() {
-        return enter;
-    }
-
-    public void setIs_enter(boolean is_enter) {
-        this.enter = is_enter;
     }
 
     public double getTime() {
