@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -83,9 +85,24 @@ public class PoleNotificationService {
     }
 
     private static void setInFirebase(String name, String beacon_id, double distance, boolean isEnter, Context context) {
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApplicationId("1:732877727331:android:2bace2a3d15056c0") // Required for Analytics.
+                .setApiKey("AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0") // Required for Auth.
+                .setDatabaseUrl("https://pole-beacons.firebaseio.com/") // Required for RTDB.
+                .build();
+
+        // Initialize with secondary app.
+        FirebaseApp.initializeApp(context /* Context */, options, "secondary");
+
+        // Retrieve secondary app.
+        FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+
+        // Get the database for the other app.
+        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("uid", "none");
-        DatabaseReference mFirebaseHistoryReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mFirebaseHistoryReference = secondaryDatabase.getReference();
         Queue queue = new Queue(beacon_id, user_id, distance, isEnter);
         mFirebaseHistoryReference.child(name).push().setValue(queue);
     }
