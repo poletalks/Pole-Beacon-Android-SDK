@@ -24,6 +24,7 @@ import com.kontakt.sdk.android.common.KontaktSDK;
 import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
+import org.json.JSONObject;
 import org.poletalks.sdk.pole_android_sdk.Model.CommonResponse;
 import org.poletalks.sdk.pole_android_sdk.Model.Queue;
 import org.poletalks.sdk.pole_android_sdk.Model.UserProfile;
@@ -186,10 +187,13 @@ public class PoleProximityManager {
         });
     }
 
-
     public static void destroyScanning() {
         proximityManager.stopScanning();
         proximityManager.disconnect();
         proximityManager = null;
+    }
+
+    public static void setUserInfo(JSONObject info){
+
     }
 }
