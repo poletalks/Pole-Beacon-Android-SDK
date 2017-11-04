@@ -121,20 +121,25 @@ public class PoleProximityManager {
     }
 
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId(Config.firebase_application_id) // Required for Analytics.
-                .setApiKey(Config.firebase_api_key) // Required for Auth.
-                .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
-                .build();
+        FirebaseDatabase secondaryDatabase;
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
+                    .setApiKey(Config.firebase_api_key) // Required for Auth.
+                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
+                    .build();
 
-        // Initialize with secondary app.
-        FirebaseApp.initializeApp(context /* Context */, options, "secondary");
+            // Initialize with secondary app.
+            FirebaseApp.initializeApp(context /* Context */, options, "secondary");
 
-        // Retrieve secondary app.
-        FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+            // Retrieve secondary app.
+            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
 
-        // Get the database for the other app.
-        FirebaseDatabase secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+            // Get the database for the other app.
+            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        } catch (Exception e){
+            secondaryDatabase = FirebaseDatabase.getInstance();
+        }
 
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("uid", "none");
