@@ -35,6 +35,7 @@ allprojects {
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 //For Android 6.0+
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION/>
 ```
 
 4. Make sure Bluetooth is enabled on your device. 

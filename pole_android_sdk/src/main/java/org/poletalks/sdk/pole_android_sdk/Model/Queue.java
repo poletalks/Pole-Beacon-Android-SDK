@@ -9,11 +9,11 @@ import java.util.Date;
  */
 
 public class Queue {
-    private String beacon_id, user_id, timeString;
+    private String beacon_id, user_id, timeString, fcm_token;
     private boolean enter;
     private double time, distance;
 
-    public Queue(String beacon_id, String user_id, double distance, boolean isEnter) {
+    public Queue(String beacon_id, String user_id, double distance, boolean isEnter, String fcm_token) {
         this.beacon_id = beacon_id;
         this.user_id = user_id;
         this.distance = distance;
@@ -23,7 +23,15 @@ public class Queue {
         SimpleDateFormat df = new SimpleDateFormat("dd MMM hh:mm aa");
         Date date = new Date(System.currentTimeMillis());
         this.timeString = df.format(date);
+        this.fcm_token = fcm_token;
+    }
 
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
     }
 
     public String getTimeString() {

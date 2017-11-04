@@ -62,42 +62,46 @@ public class PoleProximityManager {
 
     private static void registerUser(Context context, String uid) {
         final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("uid", uid);
+        editor.apply();
+
         String fcm_token = pref.getString("fcm_token", null);
 
-        if (fcm_token != null && uid != null && pref.getBoolean("is_fcm_token_changed", true)){
-            if (CheckNetwork.isInternetAvailable(context))
-            {
-                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
-                Retrofit retro = retrofitConfig.getRetro();
-                ApiInterface setprofile = retro.create(ApiInterface.class);
-                UserProfile user = new UserProfile();
-
-                user.setClientapp_name("hubilo");
-                user.setClientapp_uid(uid);
-                user.setDevice_type("ANDROID");
-                user.setFcm_token(fcm_token);
-
-                Call<CommonResponse> call = setprofile.setProfile(user);
-                call.enqueue(new Callback<CommonResponse>()
-                {
-                    @Override
-                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
-                    {
-                        if (response.code() == 200){
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putBoolean("is_fcm_token_changed", false);
-                            editor.apply();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonResponse> call, Throwable t)
-                    {
-                        Log.e("FCM", "onFailure::liketweet-" + t.toString());
-                    }
-                });
-            }
-        }
+//        if (fcm_token != null && uid != null && pref.getBoolean("is_fcm_token_changed", true)){
+//            if (CheckNetwork.isInternetAvailable(context))
+//            {
+//                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+//                Retrofit retro = retrofitConfig.getRetro();
+//                ApiInterface setprofile = retro.create(ApiInterface.class);
+//                UserProfile user = new UserProfile();
+//
+//                user.setClientapp_name("hubilo");
+//                user.setClientapp_uid(uid);
+//                user.setDevice_type("ANDROID");
+//                user.setFcm_token(fcm_token);
+//
+//                Call<CommonResponse> call = setprofile.setProfile(user);
+//                call.enqueue(new Callback<CommonResponse>()
+//                {
+//                    @Override
+//                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
+//                    {
+//                        if (response.code() == 200){
+//                            SharedPreferences.Editor editor = pref.edit();
+//                            editor.putBoolean("is_fcm_token_changed", false);
+//                            editor.apply();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<CommonResponse> call, Throwable t)
+//                    {
+//                        Log.e("FCM", "onFailure::liketweet-" + t.toString());
+//                    }
+//                });
+//            }
+//        }
 
     }
 
@@ -144,7 +148,7 @@ public class PoleProximityManager {
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("uid", "none");
         mFirebaseHistoryReference = secondaryDatabase.getReference();
-        Queue queue = new Queue(beacon_id, user_id, distance, isEnter);
+        Queue queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
         mFirebaseHistoryReference.child(TASKS).push().setValue(queue);
     }
 
