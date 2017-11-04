@@ -144,7 +144,7 @@ public class PoleProximityManager {
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("uid", "none");
         mFirebaseHistoryReference = secondaryDatabase.getReference();
-        Queue queue = new Queue(beacon_id, user_id, distance, isEnter);
+        Queue queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
         mFirebaseHistoryReference.child(TASKS).push().setValue(queue);
     }
 

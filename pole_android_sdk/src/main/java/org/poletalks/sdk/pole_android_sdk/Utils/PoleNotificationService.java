@@ -56,7 +56,6 @@ public class PoleNotificationService {
 
         setInFirebase("fcm_token", refreshedToken, 3434, true, context);
         Log.e("fcm_token", refreshedToken);
-
     }
 
     public static boolean onMessageReceived(RemoteMessage message, Context mContext) {
@@ -106,10 +105,9 @@ public class PoleNotificationService {
             secondaryDatabase = FirebaseDatabase.getInstance();
         }
 
-        SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-        String user_id = pref.getString("uid", "none");
+
         DatabaseReference mFirebaseHistoryReference = secondaryDatabase.getReference();
-        Queue queue = new Queue(beacon_id, user_id, distance, isEnter);
+        Queue queue = new Queue(beacon_id, "Fgdfgd", distance, isEnter,"Fghfgh");
         mFirebaseHistoryReference.child(name).push().setValue(queue);
     }
 
