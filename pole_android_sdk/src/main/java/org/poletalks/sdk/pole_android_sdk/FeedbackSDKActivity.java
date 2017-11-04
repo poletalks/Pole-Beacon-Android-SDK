@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class FeedbackActivity extends AppCompatActivity {
+public class FeedbackSDKActivity extends AppCompatActivity {
 
     private Context context;
     private Toolbar toolbar;

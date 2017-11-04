@@ -9,12 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.poletalks.sdk.pole_android_sdk.FeedbackActivity;
+import org.poletalks.sdk.pole_android_sdk.FeedbackSDKActivity;
 import org.poletalks.sdk.pole_android_sdk.R;
 
 import java.util.Map;
@@ -56,7 +55,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     private void createNotification(String title, String content) {
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
-            Intent resultIntent = new Intent(mContext, FeedbackActivity.class);
+            Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
 
             Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
             Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() / 1000000)));

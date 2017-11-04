@@ -25,18 +25,8 @@ import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
 import org.json.JSONObject;
-import org.poletalks.sdk.pole_android_sdk.Model.CommonResponse;
 import org.poletalks.sdk.pole_android_sdk.Model.Queue;
-import org.poletalks.sdk.pole_android_sdk.Model.UserProfile;
-import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.ApiInterface;
-import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.RetrofitConfig;
-import org.poletalks.sdk.pole_android_sdk.Utils.CheckNetwork;
 import org.poletalks.sdk.pole_android_sdk.Utils.Config;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by anjal on 10/30/17.
@@ -49,6 +39,8 @@ public class PoleProximityManager {
     public static String TASKS = "tasks-test";
     private static DatabaseReference mFirebaseHistoryReference;
     private static SharedPreferences polePref;
+    private static FirebaseDatabase secondaryDatabase;
+
 
     public static void onCreateBeacons(Context context, String uid){
         mContext= context;
@@ -56,6 +48,25 @@ public class PoleProximityManager {
 
         proximityManager = ProximityManagerFactory.create(mContext);
         proximityManager.setEddystoneListener(createEddystoneListener(mContext));
+
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
+                    .setApiKey(Config.firebase_api_key) // Required for Auth.
+                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
+                    .build();
+
+            // Initialize with secondary app.
+            FirebaseApp.initializeApp(context, options, "secondary");
+
+            // Retrieve secondary app.
+            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+
+            // Get the database for the other app.
+            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+        } catch (Exception e){
+            secondaryDatabase = FirebaseDatabase.getInstance();
+        }
 
         registerUser(context, uid);
     }
@@ -125,26 +136,6 @@ public class PoleProximityManager {
     }
 
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
-        FirebaseDatabase secondaryDatabase;
-        try {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
-                    .setApiKey(Config.firebase_api_key) // Required for Auth.
-                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
-                    .build();
-
-            // Initialize with secondary app.
-            FirebaseApp.initializeApp(context /* Context */, options, "secondary");
-
-            // Retrieve secondary app.
-            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
-
-            // Get the database for the other app.
-            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
-        } catch (Exception e){
-            secondaryDatabase = FirebaseDatabase.getInstance();
-        }
-
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("uid", "none");
         mFirebaseHistoryReference = secondaryDatabase.getReference();
@@ -155,7 +146,7 @@ public class PoleProximityManager {
     private static void createNotification(String title, String content) {
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
-            Intent resultIntent = new Intent(mContext, FeedbackActivity.class);
+            Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
 
             Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
             Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() / 1000000)));
