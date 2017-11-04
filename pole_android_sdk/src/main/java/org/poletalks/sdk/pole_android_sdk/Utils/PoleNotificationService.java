@@ -11,15 +11,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.poletalks.sdk.pole_android_sdk.FeedbackActivity;
-import org.poletalks.sdk.pole_android_sdk.Model.Queue;
+import org.poletalks.sdk.pole_android_sdk.FeedbackSDKActivity;
 import org.poletalks.sdk.pole_android_sdk.R;
 
 import java.io.IOException;
@@ -85,37 +80,37 @@ public class PoleNotificationService {
 
     private static void setInFirebase(String name, String beacon_id, double distance, boolean isEnter, Context context) {
 
-        FirebaseDatabase secondaryDatabase;
-        try {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
-                    .setApiKey(Config.firebase_api_key) // Required for Auth.
-                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
-                    .build();
-
-            // Initialize with secondary app.
-            FirebaseApp.initializeApp(context /* Context */, options, "secondary");
-
-            // Retrieve secondary app.
-            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
-
-            // Get the database for the other app.
-            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
-        } catch (Exception e){
-            secondaryDatabase = FirebaseDatabase.getInstance();
-        }
-
-
-        DatabaseReference mFirebaseHistoryReference = secondaryDatabase.getReference();
-        Queue queue = new Queue(beacon_id, "Fgdfgd", distance, isEnter,"Fghfgh");
-        mFirebaseHistoryReference.child(name).push().setValue(queue);
+//        FirebaseDatabase secondaryDatabase;
+//        try {
+//            FirebaseOptions options = new FirebaseOptions.Builder()
+//                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
+//                    .setApiKey(Config.firebase_api_key) // Required for Auth.
+//                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
+//                    .build();
+//
+//            // Initialize with secondary app.
+//            FirebaseApp.initializeApp(context /* Context */, options, "secondary");
+//
+//            // Retrieve secondary app.
+//            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
+//
+//            // Get the database for the other app.
+//            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
+//        } catch (Exception e){
+//            secondaryDatabase = FirebaseDatabase.getInstance();
+//        }
+//
+//
+//        DatabaseReference mFirebaseHistoryReference = secondaryDatabase.getReference();
+//        Queue queue = new Queue(beacon_id, "Fgdfgd", distance, isEnter,"Fghfgh");
+//        mFirebaseHistoryReference.child(name).push().setValue(queue);
     }
 
     private static void createNotification(String title, String content, Context mContext) {
         setInFirebase("getnotification", "nofification kitti", 3434, true, mContext);
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
-            Intent resultIntent = new Intent(mContext, FeedbackActivity.class);
+            Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
 
             Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
             Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() / 1000000)));
