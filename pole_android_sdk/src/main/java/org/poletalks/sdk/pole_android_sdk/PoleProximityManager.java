@@ -1,7 +1,9 @@
 package org.poletalks.sdk.pole_android_sdk;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +49,7 @@ import retrofit2.Retrofit;
 
 public class PoleProximityManager {
 
+    private static final int REQUEST_ENABLE_BT = 77;
     private static Context mContext;
     public static ProximityManager proximityManager;
     public static String TASKS = "tasks-test";

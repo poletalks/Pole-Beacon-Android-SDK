@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "732877727331",
-    "firebase_url": "https://pole-beacons.firebaseio.com",
-    "project_id": "pole-beacons",
-    "storage_bucket": "pole-beacons.appspot.com"
+    "project_number": "371510862171",
+    "firebase_url": "https://pole-beacons-73594.firebaseio.com",
+    "project_id": "pole-beacons-73594",
+    "storage_bucket": "pole-beacons-73594.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732877727331:android:2bace2a3d15056c0",
+        "mobilesdk_app_id": "1:371510862171:android:22fbecb3360c4e0f",
         "android_client_info": {
-          "package_name": "org.poletalks.sdk.pole_android_sdk"
+          "package_name": "org.poletalks.sdk.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "732877727331-p06m7mstc5cc5btd1gj3vojgctum5ocg.apps.googleusercontent.com",
+          "client_id": "371510862171-cft860pfd7vpng6jt5etbnb5o4dlflpe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0"
+          "current_key": "AIzaSyCONPZgAF8wXRY2uh-EMp1MFOfI8RAPZng"
         }
       ],
       "services": {
@@ -39,20 +39,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732877727331:android:22fbecb3360c4e0f",
+        "mobilesdk_app_id": "1:371510862171:android:2bace2a3d15056c0",
         "android_client_info": {
-          "package_name": "org.poletalks.sdk.android"
+          "package_name": "org.poletalks.sdk.pole_android_sdk"
         }
       },
       "oauth_client": [
         {
-          "client_id": "732877727331-p06m7mstc5cc5btd1gj3vojgctum5ocg.apps.googleusercontent.com",
+          "client_id": "371510862171-cft860pfd7vpng6jt5etbnb5o4dlflpe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCYqoxd57k9RnVrZOC3cB3HIdV3FpHILu0"
+          "current_key": "AIzaSyCONPZgAF8wXRY2uh-EMp1MFOfI8RAPZng"
         }
       ],
       "services": {
