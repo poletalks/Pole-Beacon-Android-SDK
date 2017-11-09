@@ -1,14 +1,11 @@
 package org.poletalks.sdk.pole_android_sdk;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -19,21 +16,15 @@ import android.widget.Toast;
 
 import com.etiennelawlor.discreteslider.library.ui.DiscreteSlider;
 import com.etiennelawlor.discreteslider.library.utilities.DisplayUtility;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import org.poletalks.sdk.pole_android_sdk.Model.LoginResponse;
 import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.ApiInterface;
 import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.RetrofitConfig;
-import org.poletalks.sdk.pole_android_sdk.Utils.Config;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
-import static java.security.AccessController.getContext;
 
 public class FeedbackSDKActivity extends AppCompatActivity {
 
@@ -45,7 +36,7 @@ public class FeedbackSDKActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feedback);
+        setContentView(R.layout.activity_sdk_feedback);
 
         context = this;
         setStatusBarColor();
