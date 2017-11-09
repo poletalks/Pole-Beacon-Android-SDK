@@ -24,4 +24,7 @@ public interface ApiInterface {
 
     @PUT("user/update")
     Call<CommonResponse> updateProfile(@Body UserProfile userProfile);
+
+    @POST("user/update")
+    Call<CommonResponse> sendUserDetails(@Body JsonObject data);
 }

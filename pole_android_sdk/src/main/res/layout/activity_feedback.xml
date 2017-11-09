@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -9,15 +11,15 @@
         android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="56dp"-->
-            <!--android:text="FEEDBACK"-->
-            <!--android:textSize="18dp"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:background="#158570"-->
-            <!--android:textAlignment="center"-->
-            <!--android:gravity="center"/>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="FEEDBACK"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            android:background="#158570"
+            android:textAlignment="center"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -39,112 +41,155 @@
             android:textColor="#384950"
             android:textSize="10sp" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColorHint="#919eab"
-            android:textSize="12dp"
-            android:theme="@style/EdittextTheme" />
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:text="Sliding scale of 1-5 of how effective the session was"
+            android:textColor="#384950"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp" />
 
-        <EditText
+        <com.etiennelawlor.discreteslider.library.ui.DiscreteSlider
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:backdropFillColor="#d2cece"
+            app:backdropStrokeColor="#d2cece"
+            app:backdropStrokeWidth="1dp"
+            app:horizontalBarThickness="4dp"
+            app:tickMarkCount="5"
+            app:tickMarkRadius="8dp"
+            app:position="3"
+            app:thumb="@drawable/thumb"
+            app:progressDrawable="@drawable/transparent_progress_drawable"/>
+
+        <RelativeLayout
+            android:id="@+id/tick_mark_labels_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#919eab"
-            android:textSize="12dp"
-            android:theme="@style/EdittextTheme" />
+            android:paddingTop="0dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="15dp"
-            android:text="How satisfied were you with event: "
-            android:textColor="#919eab"
-            android:textSize="12dp" />
+            android:text="Whether the entrepreneur made meaningful connections to people or speakers during the session?"
+            android:textColor="#384950"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp" />
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:background="#9fa7b3"-->
-            <!--android:weightSum="5"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<FrameLayout-->
-                <!--android:id="@+id/dummy"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:layout_height="wrap_content"/>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="3"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:weightSum="3">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text="Satisfied"-->
-                    <!--android:textAlignment="center"-->
-                    <!--android:textSize="10dp"-->
-                    <!--android:textColor="#384950" />-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text="Neutral"-->
-                    <!--android:textAlignment="center"-->
-                    <!--android:textSize="10dp"-->
-                    <!--android:textColor="#384950" />-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text="Unsatisfied"-->
-                    <!--android:textAlignment="center"-->
-                    <!--android:textSize="10dp"-->
-                    <!--android:textColor="#384950" />-->
-                <!---->
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-
-        <include layout="@layout/option_item"/>
-        <include layout="@layout/option_item"/>
-        <include layout="@layout/option_item"/>
-        <include layout="@layout/option_item"/>
-        <include layout="@layout/option_item"/>
-        <include layout="@layout/option_item"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your Comments"
-            android:layout_marginLeft="20dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:weightSum="3">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColorHighlight="#384950"
+                android:text="Yes"
+                android:textSize="10dp"
+                app:buttonTint="#384950"
+                android:textColor="#384950"
+                android:layout_weight="1" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColorHighlight="#384950"
+                android:text="No"
+                android:textSize="10dp"
+                app:buttonTint="#384950"
+                android:textColor="#384950"
+                android:layout_weight="1" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Your comments about the session?"
+            android:textColor="#384950"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp" />
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Name"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:textColorHint="#919eab"-->
+            <!--android:textSize="12dp"-->
+            <!--android:theme="@style/EdittextTheme" />-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Email"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:textColorHint="#919eab"-->
+            <!--android:textSize="12dp"-->
+            <!--android:theme="@style/EdittextTheme" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#ffffff"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:paddingRight="20dp"-->
+            <!--android:paddingTop="15dp"-->
+            <!--android:text="How satisfied were you with event: "-->
+            <!--android:textColor="#919eab"-->
+            <!--android:textSize="12dp" />-->
+
+
+        <!--<include layout="@layout/option_item"/>-->
+        <!--<include layout="@layout/option_item"/>-->
+        <!--<include layout="@layout/option_item"/>-->
+        <!--<include layout="@layout/option_item"/>-->
+        <!--<include layout="@layout/option_item"/>-->
+        <!--<include layout="@layout/option_item"/>-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/recyclerview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Your Comments"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:textColorHint="#919eab"-->
+            <!--android:textSize="12dp"-->
+            <!--android:theme="@style/EdittextTheme" />-->
+        
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:textColorHint="#919eab"
+            android:layout_marginLeft="20dp"
             android:textSize="12dp"
-            android:theme="@style/EdittextTheme" />
+            android:layout_gravity="start"
+            android:hint="Write here..."
+            android:textColorHint="#919eab"
+            android:textColor="#000000"
+            android:background="@drawable/customboarder"/>
 
         <Button
             android:layout_width="match_parent"
@@ -152,8 +197,9 @@
             android:layout_margin="20dp"
             android:background="#384950"
             android:text="Submit"
+            android:textStyle="normal"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="17dp" />
 
     </LinearLayout>
 

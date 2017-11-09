@@ -5,6 +5,8 @@ import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.poletalks.sdk.pole_android_sdk.PoleProximityManager;
 
 
@@ -18,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         PoleProximityManager.onCreateBeacons(this, "user_id");
+
+        JSONObject jsonObject = new JSONObject();
+        PoleProximityManager.setUserInfo(jsonObject, this);
     }
 
 

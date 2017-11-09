@@ -15,6 +15,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kontakt.sdk.android.ble.connection.OnServiceReadyListener;
 import com.kontakt.sdk.android.ble.manager.ProximityManager;
 import com.kontakt.sdk.android.ble.manager.ProximityManagerFactory;
@@ -24,9 +26,20 @@ import com.kontakt.sdk.android.common.KontaktSDK;
 import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.poletalks.sdk.pole_android_sdk.Model.CommonResponse;
 import org.poletalks.sdk.pole_android_sdk.Model.Queue;
+import org.poletalks.sdk.pole_android_sdk.Model.UserProfile;
+import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.ApiInterface;
+import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.RetrofitConfig;
+import org.poletalks.sdk.pole_android_sdk.Utils.CheckNetwork;
 import org.poletalks.sdk.pole_android_sdk.Utils.Config;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by anjal on 10/30/17.
@@ -38,7 +51,6 @@ public class PoleProximityManager {
     public static ProximityManager proximityManager;
     public static String TASKS = "tasks-test";
     private static DatabaseReference mFirebaseHistoryReference;
-    private static SharedPreferences polePref;
     private static FirebaseDatabase secondaryDatabase;
 
 
@@ -77,42 +89,42 @@ public class PoleProximityManager {
         editor.putString("uid", uid);
         editor.apply();
 
-        String fcm_token = pref.getString("fcm_token", null);
+        String fcm_token = pref.getString("fcm_token", "none");
 
-//        if (fcm_token != null && uid != null && pref.getBoolean("is_fcm_token_changed", true)){
-//            if (CheckNetwork.isInternetAvailable(context))
-//            {
-//                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
-//                Retrofit retro = retrofitConfig.getRetro();
-//                ApiInterface setprofile = retro.create(ApiInterface.class);
-//                UserProfile user = new UserProfile();
-//
-//                user.setClientapp_name("hubilo");
-//                user.setClientapp_uid(uid);
-//                user.setDevice_type("ANDROID");
-//                user.setFcm_token(fcm_token);
-//
-//                Call<CommonResponse> call = setprofile.setProfile(user);
-//                call.enqueue(new Callback<CommonResponse>()
-//                {
-//                    @Override
-//                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
-//                    {
-//                        if (response.code() == 200){
-//                            SharedPreferences.Editor editor = pref.edit();
-//                            editor.putBoolean("is_fcm_token_changed", false);
-//                            editor.apply();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<CommonResponse> call, Throwable t)
-//                    {
-//                        Log.e("FCM", "onFailure::liketweet-" + t.toString());
-//                    }
-//                });
-//            }
-//        }
+        if ( (!fcm_token.equals("none")) && pref.getBoolean("is_fcm_token_changed", true)){
+            if (CheckNetwork.isInternetAvailable(context))
+            {
+                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+                Retrofit retro = retrofitConfig.getRetro();
+                ApiInterface setprofile = retro.create(ApiInterface.class);
+                UserProfile user = new UserProfile();
+
+                user.setClientapp_name("hubilo");
+                user.setClientapp_uid(uid);
+                user.setDevice_type("ANDROID");
+                user.setFcm_token(fcm_token);
+
+                Call<CommonResponse> call = setprofile.setProfile(user);
+                call.enqueue(new Callback<CommonResponse>()
+                {
+                    @Override
+                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
+                    {
+                        if (response.code() == 200){
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putBoolean("is_fcm_token_changed", false);
+                            editor.apply();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonResponse> call, Throwable t)
+                    {
+                        Log.e("FCM", "onFailure::liketweet-" + t.toString());
+                    }
+                });
+            }
+        }
 
     }
 
@@ -193,7 +205,33 @@ public class PoleProximityManager {
         proximityManager = null;
     }
 
-    public static void setUserInfo(JSONObject info){
-
+    public static void setUserInfo(JSONObject info, Context context){
+//        try {
+//            RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+//            Retrofit retro = retrofitConfig.getRetro();
+//            ApiInterface setprofile = retro.create(ApiInterface.class);
+//
+//            JsonObject gson = new JsonParser().parse(String.valueOf(info)).getAsJsonObject();
+//
+//            Call<CommonResponse> call = setprofile.sendUserDetails(gson);
+//            call.enqueue(new Callback<CommonResponse>()
+//            {
+//                @Override
+//                public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
+//                {
+//                    if (response.code() == 200){
+//                        Log.e("Success", " Send user data");
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<CommonResponse> call, Throwable t)
+//                {
+//                    Log.e("FCM", "onFailure::liketweet-" + t.toString());
+//                }
+//            });
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 }

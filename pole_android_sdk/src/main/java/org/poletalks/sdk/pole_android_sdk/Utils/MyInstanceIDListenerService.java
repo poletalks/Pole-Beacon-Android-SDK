@@ -50,42 +50,5 @@ public class MyInstanceIDListenerService extends FirebaseInstanceIdService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
-    private void sendRegistrationToServer(String refreshedToken) {
-        final SharedPreferences pref = getSharedPreferences("PolePref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("fcm_token", refreshedToken);
-        editor.commit();
-
-        Log.e("fcm_token", refreshedToken);
-
-//        if (CheckNetwork.isInternetAvailable(getApplicationContext()))
-//        {
-//            RetrofitConfig retrofitConfig = new RetrofitConfig(getApplicationContext());
-//            Retrofit retro = retrofitConfig.getRetro();
-//            ApiInterface setprofile = retro.create(ApiInterface.class);
-//            UserProfile user = new UserProfile();
-//            user.setGcm(refreshedToken);
-//            Call<SetProfileResponse> call = setprofile.setProfile(user);
-//            call.enqueue(new Callback<SetProfileResponse>()
-//            {
-//                @Override
-//                public void onResponse(Call<SetProfileResponse> call, Response<SetProfileResponse> response)
-//                {
-//                    Log.e("FCM", String.valueOf(response.code()));
-//                }
-//
-//                @Override
-//                public void onFailure(Call<SetProfileResponse> call, Throwable t)
-//                {
-//                    Log.e("FCM", "onFailure::liketweet-" + t.toString());
-//                }
-//            });
-//        }
-
-    }
-
 }

@@ -15,10 +15,20 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.poletalks.sdk.pole_android_sdk.FeedbackSDKActivity;
+import org.poletalks.sdk.pole_android_sdk.Model.CommonResponse;
+import org.poletalks.sdk.pole_android_sdk.Model.UserProfile;
+import org.poletalks.sdk.pole_android_sdk.PoleProximityManager;
 import org.poletalks.sdk.pole_android_sdk.R;
+import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.ApiInterface;
+import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.RetrofitConfig;
 
 import java.io.IOException;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by anjal on 11/1/17.
@@ -39,7 +49,7 @@ public class PoleNotificationService {
         return (refreshedToken);
     }
 
-    public static void sendRegistrationToServer(String refreshedToken, Context context) {
+    static void sendRegistrationToServer(String refreshedToken, Context context) {
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
 
         if (!pref.getString("fcm_token", "none").equals(refreshedToken)) {
@@ -49,8 +59,36 @@ public class PoleNotificationService {
             editor.apply();
         }
 
-        setInFirebase(refreshedToken, refreshedToken, 3434, true, context);
-        Log.e("fcm_token", refreshedToken);
+        if (CheckNetwork.isInternetAvailable(context))
+        {
+            RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+            Retrofit retro = retrofitConfig.getRetro();
+            ApiInterface setprofile = retro.create(ApiInterface.class);
+            UserProfile user = new UserProfile();
+
+            user.setClientapp_name("hubilo");
+            user.setClientapp_uid(null);
+            user.setDevice_type("ANDROID");
+            user.setFcm_token(refreshedToken);
+
+            Call<CommonResponse> call = setprofile.setProfile(user);
+            call.enqueue(new Callback<CommonResponse>()
+            {
+                @Override
+                public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)
+                {
+                    if (response.code() == 200){
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommonResponse> call, Throwable t)
+                {
+                    Log.e("FCM", "onFailure::liketweet-" + t.toString());
+                }
+            });
+        }
+
     }
 
     public static boolean onMessageReceived(RemoteMessage message, Context mContext) {
@@ -79,36 +117,7 @@ public class PoleNotificationService {
 //        }
     }
 
-    private static void setInFirebase(String name, String beacon_id, double distance, boolean isEnter, Context context) {
-
-//        FirebaseDatabase secondaryDatabase;
-//        try {
-//            FirebaseOptions options = new FirebaseOptions.Builder()
-//                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
-//                    .setApiKey(Config.firebase_api_key) // Required for Auth.
-//                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
-//                    .build();
-//
-//            // Initialize with secondary app.
-//            FirebaseApp.initializeApp(context /* Context */, options, "secondary");
-//
-//            // Retrieve secondary app.
-//            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
-//
-//            // Get the database for the other app.
-//            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
-//        } catch (Exception e){
-//            secondaryDatabase = FirebaseDatabase.getInstance();
-//        }
-//
-//
-//        DatabaseReference mFirebaseHistoryReference = secondaryDatabase.getReference();
-//        Queue queue = new Queue(beacon_id, "Fgdfgd", distance, isEnter,"Fghfgh");
-//        mFirebaseHistoryReference.child(name).push().setValue(queue);
-    }
-
     private static void createNotification(String title, String content, Context mContext) {
-        setInFirebase("getnotification", "nofification kitti", 3434, true, mContext);
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
             Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
