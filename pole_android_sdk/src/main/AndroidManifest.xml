@@ -34,6 +34,7 @@
 
         <activity
             android:name="org.poletalks.sdk.pole_android_sdk.FeedbackPage.FeedbackSDKActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait">
 
         </activity>

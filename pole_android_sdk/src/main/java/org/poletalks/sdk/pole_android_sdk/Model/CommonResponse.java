@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CommonResponse {
     private ArrayList<FeedbackQuestion> feedbackQuestions = new ArrayList<>();
-    private ProgramDetails programDetails = new ProgramDetails();
+    private ProgramDetails item = new ProgramDetails();
     private String _id;
 
     public String get_id() {
@@ -27,11 +27,11 @@ public class CommonResponse {
         this.feedbackQuestions = feedbackQuestions;
     }
 
-    public ProgramDetails getProgramDetails() {
-        return programDetails;
+    public ProgramDetails getItem() {
+        return item;
     }
 
-    public void setProgramDetails(ProgramDetails programDetails) {
-        this.programDetails = programDetails;
+    public void setItem(ProgramDetails item) {
+        this.item = item;
     }
 }

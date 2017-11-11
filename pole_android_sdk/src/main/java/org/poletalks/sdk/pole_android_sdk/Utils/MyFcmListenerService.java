@@ -49,43 +49,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
             double time = Double.parseDouble((String) data.get("time"));
         }
 
-        createNotification(title, content);
+//        createNotification(title, content);
+        PoleNotificationService.createNotification(title, content, null, null, mContext);
     }
-
-    private void createNotification(String title, String content) {
-        try {
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
-            Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
-
-            Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
-            Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() / 1000000)));
-
-            mBuilder.setSmallIcon(R.drawable.small_icon)
-                    .setLargeIcon(icon)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .setOnlyAlertOnce(true);
-
-            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle()
-                    .setBigContentTitle(title)
-                    .bigText(content);
-            mBuilder.setStyle(bigTextStyle);
-
-            SharedPreferences pref = mContext.getSharedPreferences("notification", Context.MODE_PRIVATE);
-            int totalNotificationCount = pref.getInt("totalNotificationCount",0);
-
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
-            stackBuilder.addNextIntent(resultIntent);
-            PendingIntent pendingIntent = stackBuilder.getPendingIntent(totalNotificationCount, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
-            mBuilder.setContentIntent(pendingIntent);
-            NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-            mBuilder.setVibrate(new long[]{100});
-            mBuilder.setAutoCancel(true);
-            mNotificationManager.notify(notificationId, mBuilder.build());
-        } catch (Exception e){
-        }
-
-    }
-
-
 }

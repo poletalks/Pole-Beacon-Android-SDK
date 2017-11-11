@@ -35,6 +35,7 @@ import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.ApiInterface;
 import org.poletalks.sdk.pole_android_sdk.RetrofitSupport.RetrofitConfig;
 import org.poletalks.sdk.pole_android_sdk.Utils.CheckNetwork;
 import org.poletalks.sdk.pole_android_sdk.Utils.Config;
+import org.poletalks.sdk.pole_android_sdk.Utils.PoleNotificationService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -169,14 +170,14 @@ public class PoleProximityManager {
             @Override
             public void onEddystoneDiscovered(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
                 Log.e("Pole Enter ", eddystone.getUniqueId());
-                createNotification("Welcome to "+eddystone.getUniqueId(), "Hope you have an awesome time.");
+                PoleNotificationService.createNotification("Welcome to "+eddystone.getUniqueId(), "Hope you have an awesome time.", null, null, mContext);
                 setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), true, mContext);
             }
 
             @Override
             public void onEddystoneLost(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
                 Log.e("Pole Exit ", eddystone.getUniqueId());
-                createNotification("Hope you had a great time!", "Please give us your feedback");
+                PoleNotificationService.createNotification("Hope you had a great time!", "Please give us your feedback", null, null, mContext);
                 setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), false, mContext);
             }
         };
@@ -189,41 +190,6 @@ public class PoleProximityManager {
         mFirebaseHistoryReference = secondaryDatabase.getReference();
         Queue queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
         mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
-    }
-
-    private static void createNotification(String title, String content) {
-        try {
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
-            Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
-
-            Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
-            Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() / 1000000)));
-
-            mBuilder.setSmallIcon(R.drawable.small_icon)
-                    .setLargeIcon(icon)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .setOnlyAlertOnce(true);
-
-            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle()
-                    .setBigContentTitle(title)
-                    .bigText(content);
-            mBuilder.setStyle(bigTextStyle);
-
-            SharedPreferences pref = mContext.getSharedPreferences("notification", Context.MODE_PRIVATE);
-            int totalNotificationCount = pref.getInt("totalNotificationCount",0);
-
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
-            stackBuilder.addNextIntent(resultIntent);
-            PendingIntent pendingIntent = stackBuilder.getPendingIntent(totalNotificationCount, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
-            mBuilder.setContentIntent(pendingIntent);
-            NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-            mBuilder.setVibrate(new long[]{100});
-            mBuilder.setAutoCancel(true);
-            mNotificationManager.notify(notificationId, mBuilder.build());
-        } catch (Exception e){
-        }
-
     }
 
     public static void startScanning() {

@@ -1,5 +1,6 @@
 package org.poletalks.sdk.pole_android_sdk.Utils;
 
+import android.app.LauncherActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -153,15 +154,18 @@ public class PoleNotificationService {
 
     }
 
-    private static void createNotification(String title, String content,String item_id, String item_type, Context mContext) {
+    public static void createNotification(String title, String content, String item_id, String item_type, Context mContext) {
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
+
             Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
             resultIntent.putExtra("item_id", item_id);
             resultIntent.putExtra("item_type", item_type);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, resultIntent, 0);
 
             Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
-            Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() / 1000000)));
+            Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() % 4234)));
 
             mBuilder.setSmallIcon(R.drawable.small_icon)
                     .setLargeIcon(icon)
@@ -175,18 +179,18 @@ public class PoleNotificationService {
             mBuilder.setStyle(bigTextStyle);
 
             SharedPreferences pref = mContext.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-            int totalNotificationCount = pref.getInt("totalNotificationCount",0);
+            int totalNotificationCount = pref.getInt("totalNotificationCount", 0);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt("totalNotificationCount", totalNotificationCount+1);
+            editor.apply();
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
-            stackBuilder.addNextIntent(resultIntent);
-            PendingIntent pendingIntent = stackBuilder.getPendingIntent(totalNotificationCount, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
             mBuilder.setContentIntent(pendingIntent);
             NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
             mBuilder.setVibrate(new long[]{100});
             mBuilder.setAutoCancel(true);
-            mBuilder.setPriority(Notification.PRIORITY_HIGH);
             mNotificationManager.notify(notificationId, mBuilder.build());
         } catch (Exception e){
+            Log.e("NOtification Error", "Dsdsf");
         }
 
     }

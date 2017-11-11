@@ -1,8 +1,8 @@
 package org.poletalks.sdk.android;
 
-import android.*;
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,27 +20,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_pole_sdk);
 
         PoleProximityManager.onCreateBeacons(this, "useridaanumone");
-
         context = this;
-        findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("key1", "value1");
-                    jsonObject.put("key2", "value2");
-                    jsonObject.put("key3", "value3");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                PoleProximityManager.setUserInfo(jsonObject, context, "clientuseridaanumone");
-            }
-        });
-
-
     }
 
 

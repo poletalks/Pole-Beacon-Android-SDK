@@ -58,11 +58,11 @@ public class FeedbackSDKActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private String item_type, item_id;
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        finish();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +188,9 @@ public class FeedbackSDKActivity extends AppCompatActivity {
                     nestedScrollView.setVisibility(View.VISIBLE);
 
                     qAdapter.notifyDataSetChanged();
+                    if (response.body().getItem() != null && response.body().getItem().getName() != null){
+                        programmTitle.setText(response.body().getItem().getName());
+                    }
                 } else {
                     Toast.makeText(context, "Oops, something went wrong!", Toast.LENGTH_LONG).show();
                     finish();
