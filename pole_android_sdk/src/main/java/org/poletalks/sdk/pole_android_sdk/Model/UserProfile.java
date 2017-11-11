@@ -1,11 +1,30 @@
 package org.poletalks.sdk.pole_android_sdk.Model;
 
+import com.google.gson.JsonObject;
+
 /**
  * Created by anjal on 11/2/17.
  */
 
 public class UserProfile {
-    private String profile_image, clientapp_name, clientapp_uid, fcm_token, device_type;
+    private String profile_image, clientapp_name, clientapp_uid, fcm_token, device_type, _id;
+    private JsonObject user_info;
+
+    public JsonObject getUser_info() {
+        return user_info;
+    }
+
+    public void setUser_info(JsonObject user_info) {
+        this.user_info = user_info;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getProfile_image() {
         return profile_image;

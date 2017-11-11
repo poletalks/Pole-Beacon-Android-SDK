@@ -13,7 +13,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.poletalks.sdk.pole_android_sdk.FeedbackSDKActivity;
+import org.poletalks.sdk.pole_android_sdk.FeedbackPage.FeedbackSDKActivity;
 import org.poletalks.sdk.pole_android_sdk.R;
 
 import java.util.Map;

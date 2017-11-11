@@ -1,208 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#ffffff"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="FEEDBACK"
+        android:textSize="18dp"
+        android:textColor="#ffffff"
+        android:background="#158570"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <RelativeLayout
+        android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:visibility="gone">
 
-        <TextView
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/ProgressBar"
+            android:layout_width="56dp"
             android:layout_height="56dp"
-            android:text="FEEDBACK"
-            android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:background="#158570"
-            android:textAlignment="center"
-            android:gravity="center"/>
+            android:layout_centerInParent="true"
+            android:background ="@drawable/progress"/>
 
-        <TextView
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:background="#9fa7b3"
-            android:paddingTop="10dp"
-            android:text="Networking &amp; GIST Pitch Competition"
-            android:textColor="#384950"
-            android:textSize="14sp" />
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:background="#9fa7b3"
-            android:paddingLeft="20dp"
-            android:text="Give a feedback about this session."
-            android:textColor="#384950"
-            android:textSize="10sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:text="Sliding scale of 1-5 of how effective the session was"
-            android:textColor="#384950"
-            android:layout_marginTop="20dp"
-            android:textSize="12sp" />
-
-        <com.etiennelawlor.discreteslider.library.ui.DiscreteSlider
-            android:id="@+id/slider"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:backdropFillColor="#d2cece"
-            app:backdropStrokeColor="#d2cece"
-            app:backdropStrokeWidth="1dp"
-            app:horizontalBarThickness="4dp"
-            app:tickMarkCount="5"
-            app:tickMarkRadius="8dp"
-            app:position="3"
-            app:thumb="@drawable/thumb"
-            app:progressDrawable="@drawable/transparent_progress_drawable"/>
-
-        <RelativeLayout
-            android:id="@+id/tick_mark_labels_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="0dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="Whether the entrepreneur made meaningful connections to people or speakers during the session?"
-            android:textColor="#384950"
-            android:layout_marginTop="20dp"
-            android:textSize="12sp" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="15dp"
-            android:weightSum="3">
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/programm_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHighlight="#384950"
-                android:text="Yes"
-                android:textSize="10dp"
-                app:buttonTint="#384950"
+                android:paddingLeft="20dp"
+                android:background="#9fa7b3"
+                android:paddingTop="10dp"
+                android:text="Networking &amp; GIST Pitch Competition"
                 android:textColor="#384950"
-                android:layout_weight="1" />
+                android:textSize="14sp" />
 
-            <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHighlight="#384950"
-                android:text="No"
-                android:textSize="10dp"
-                app:buttonTint="#384950"
+                android:paddingBottom="10dp"
+                android:background="#9fa7b3"
+                android:paddingLeft="20dp"
+                android:text="Give a feedback about this session."
                 android:textColor="#384950"
-                android:layout_weight="1" />
+                android:textSize="10sp" />
 
-        </RadioGroup>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="Your comments about the session?"
-            android:textColor="#384950"
-            android:layout_marginTop="20dp"
-            android:textSize="12sp" />
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="#384950"
+                android:text="Submit"
+                android:textStyle="normal"
+                android:textColor="#ffffff"
+                android:textSize="17dp" />
 
-        <!--<EditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Name"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:textColorHint="#919eab"-->
-            <!--android:textSize="12dp"-->
-            <!--android:theme="@style/EdittextTheme" />-->
+            <RelativeLayout
+                android:id="@+id/submit_loader"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:visibility="gone"
+                android:background="#384950">
 
-        <!--<EditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Email"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:textColorHint="#919eab"-->
-            <!--android:textSize="12dp"-->
-            <!--android:theme="@style/EdittextTheme" />-->
+                <ProgressBar
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerInParent="true"
+                    android:background ="@drawable/progress"/>
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="#ffffff"-->
-            <!--android:paddingLeft="20dp"-->
-            <!--android:paddingRight="20dp"-->
-            <!--android:paddingTop="15dp"-->
-            <!--android:text="How satisfied were you with event: "-->
-            <!--android:textColor="#919eab"-->
-            <!--android:textSize="12dp" />-->
+            </RelativeLayout>
 
-
-        <!--<include layout="@layout/option_item"/>-->
-        <!--<include layout="@layout/option_item"/>-->
-        <!--<include layout="@layout/option_item"/>-->
-        <!--<include layout="@layout/option_item"/>-->
-        <!--<include layout="@layout/option_item"/>-->
-        <!--<include layout="@layout/option_item"/>-->
-
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/recyclerview"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-        <!--<EditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Your Comments"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:textColorHint="#919eab"-->
-            <!--android:textSize="12dp"-->
-            <!--android:theme="@style/EdittextTheme" />-->
-        
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:textSize="12dp"
-            android:layout_gravity="start"
-            android:hint="Write here..."
-            android:textColorHint="#919eab"
-            android:textColor="#000000"
-            android:background="@drawable/customboarder"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:background="#384950"
-            android:text="Submit"
-            android:textStyle="normal"
-            android:textColor="#ffffff"
-            android:textSize="17dp" />
-
-    </LinearLayout>
-
-</ScrollView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
 
 

@@ -9,12 +9,13 @@ import java.util.Date;
  */
 
 public class Queue {
-    private String beacon_id, user_id, timeString, fcm_token;
+    private String beacon_id, user_id, timeString, fcm_token, client_id;
     private boolean enter;
     private double time, distance;
 
-    public Queue(String beacon_id, String user_id, double distance, boolean isEnter, String fcm_token) {
+    public Queue(String beacon_id, String user_id, String client_id, double distance, boolean isEnter, String fcm_token) {
         this.beacon_id = beacon_id;
+        this.client_id = client_id;
         this.user_id = user_id;
         this.distance = distance;
         this.enter = isEnter;

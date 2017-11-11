@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff"
+    android:layout_width="300dp"
+    android:layout_height="320dp">
+    
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="121dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/success_icon"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="16dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="Your feedback successfully submited!"
+        android:layout_below="@+id/image"
+        android:textColor="#43b989"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="12dp"
+        android:textAlignment="center"
+        android:text="Thanks for your valuable feedback."
+        android:layout_below="@+id/text1"
+        android:textColor="#a6a8ab"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/text2"
+        android:background="#43b989"
+        android:text="DONE"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:textSize="17dp" />
+
+</RelativeLayout>

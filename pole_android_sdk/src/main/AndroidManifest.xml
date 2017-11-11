@@ -33,7 +33,7 @@
         </service>
 
         <activity
-            android:name="org.poletalks.sdk.pole_android_sdk.FeedbackSDKActivity"
+            android:name="org.poletalks.sdk.pole_android_sdk.FeedbackPage.FeedbackSDKActivity"
             android:screenOrientation="portrait">
 
         </activity>

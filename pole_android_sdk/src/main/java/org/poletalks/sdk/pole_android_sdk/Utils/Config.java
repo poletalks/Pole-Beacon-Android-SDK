@@ -5,6 +5,7 @@ package org.poletalks.sdk.pole_android_sdk.Utils;
  */
 
 public class Config {
+    public static String base_url = "http://beacontestapp.poletalks.com";
     public static String fcm_sender_id = "371510862171";
     public static String kontakt_api_key = "SqsMXrtfSNncgUTHgiAzRSbLlnNruZxN";
 

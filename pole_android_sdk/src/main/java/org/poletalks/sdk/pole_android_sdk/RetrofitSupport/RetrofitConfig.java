@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.poletalks.sdk.pole_android_sdk.Utils.Config;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -27,31 +29,13 @@ public class RetrofitConfig {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS);
 
-        OkHttpClient.Builder httpClient2 = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS);
-
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
-                SharedPreferences preferences = context.getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-
-                Log.e("uid", preferences.getString("uid", ""));
-
-                Log.e("hash", preferences.getString("hash", ""));
-
-                Log.e("admin", preferences.getString("admin", ""));
-
-                Log.e("adminhash", preferences.getString("adminhash", ""));
 
                 Request request = original.newBuilder()
-                        .header("uid", preferences.getString("uid", ""))
-                        .header("hash", preferences.getString("hash", ""))
-                        .header("storeadmin", preferences.getString("admin", ""))
-                        .header("adminhash", preferences.getString("adminhash", ""))
                         .method(original.method(), original.body())
                         .build();
 
@@ -59,11 +43,10 @@ public class RetrofitConfig {
             }
         });
 
-        OkHttpClient client2 = httpClient2.build();
         OkHttpClient client = httpClient.build();
 
         this.retro = new Retrofit.Builder()
-                .baseUrl("http://test.poletalks.com/")
+                .baseUrl(Config.base_url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
