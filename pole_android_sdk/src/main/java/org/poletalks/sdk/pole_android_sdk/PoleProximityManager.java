@@ -170,14 +170,14 @@ public class PoleProximityManager {
             @Override
             public void onEddystoneDiscovered(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
                 Log.e("Pole Enter ", eddystone.getUniqueId());
-                PoleNotificationService.createNotification("Welcome to "+eddystone.getUniqueId(), "Hope you have an awesome time.", null, null, mContext);
+//                PoleNotificationService.createNotification("Welcome to "+eddystone.getUniqueId(), "Hope you have an awesome time.", null, null, mContext);
                 setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), true, mContext);
             }
 
             @Override
             public void onEddystoneLost(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
                 Log.e("Pole Exit ", eddystone.getUniqueId());
-                PoleNotificationService.createNotification("Hope you had a great time!", "Please give us your feedback", null, null, mContext);
+//                PoleNotificationService.createNotification("Hope you had a great time!", "Please give us your feedback", null, null, mContext);
                 setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), false, mContext);
             }
         };
