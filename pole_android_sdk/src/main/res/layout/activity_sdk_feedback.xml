@@ -99,6 +99,24 @@
 
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/not_attend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#384950"
+                android:textSize="13dp"
+                android:padding="5dp"
+                android:text="I did not attend this session"
+                android:layout_gravity="center_horizontal"/>
+            
+            <ImageView
+                android:layout_width="112dp"
+                android:layout_height="15dp"
+                android:src="@drawable/powered_poletalks"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"/>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

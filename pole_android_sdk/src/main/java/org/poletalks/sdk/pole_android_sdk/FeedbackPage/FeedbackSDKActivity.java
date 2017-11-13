@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -51,7 +52,7 @@ public class FeedbackSDKActivity extends AppCompatActivity {
     private ArrayList<FeedbackQuestion> feedbackQuestions = new ArrayList<>();
     private QuestionAdapter qAdapter;
     private RecyclerView recyclerView;
-    private TextView programmTitle;
+    private TextView programmTitle, noAttend;
     private RelativeLayout loader;
     private NestedScrollView nestedScrollView;
     private Button button;
@@ -79,6 +80,9 @@ public class FeedbackSDKActivity extends AppCompatActivity {
         nestedScrollView = (NestedScrollView) findViewById(R.id.scrollView);
         button = (Button) findViewById(R.id.submit);
         submitLoader = (RelativeLayout) findViewById(R.id.submit_loader);
+        noAttend = (TextView) findViewById(R.id.not_attend);
+
+        noAttend.setPaintFlags(noAttend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         qAdapter = new QuestionAdapter(context, feedbackQuestions);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
@@ -91,10 +95,17 @@ public class FeedbackSDKActivity extends AppCompatActivity {
         item_type = getIntent().getStringExtra("item_type");
 
         if (item_id == null || item_type == null){
-//            item_id = "59f9e72f65db3e1d9cbeaa02";
-//            item_type = "PROGRAM";
-            finish();
+            item_id = "59f9e72f65db3e1d9cbeaa02";
+            item_type = "PROGRAM";
+//            finish();
         }
+
+        noAttend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         getdata(item_id, item_type);
 
