@@ -196,12 +196,14 @@ public class PoleProximityManager {
         String client_id = pref.getString("client_uid", null);
         mFirebaseHistoryReference = secondaryDatabase.getReference();
         Queue queue;
-        if (client_id == null){
-            queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
-        } else {
-            queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+        if (!pref.getString("fcm_token", "fcm_token").equals("fcm_token") && !user_id.equals("none")){
+            if (client_id == null){
+                queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+            } else {
+                queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+            }
+            mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
         }
-        mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
     }
 
     public static void startScanning() {
