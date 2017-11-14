@@ -95,9 +95,9 @@ public class FeedbackSDKActivity extends AppCompatActivity {
         item_type = getIntent().getStringExtra("item_type");
 
         if (item_id == null || item_type == null){
-            item_id = "59f9e72f65db3e1d9cbeaa02";
-            item_type = "PROGRAM";
-//            finish();
+//            item_id = "59f9e72f65db3e1d9cbeaa02";
+//            item_type = "PROGRAM";
+            finish();
         }
 
         noAttend.setOnClickListener(new View.OnClickListener() {
