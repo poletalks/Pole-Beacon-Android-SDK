@@ -27,6 +27,20 @@ public class Queue {
         this.fcm_token = fcm_token;
     }
 
+    public Queue(String beacon_id, String user_id, double distance, boolean isEnter, String fcm_token) {
+        this.beacon_id = beacon_id;
+        this.client_id = client_id;
+        this.user_id = user_id;
+        this.distance = distance;
+        this.enter = isEnter;
+        this.time = System.currentTimeMillis()/1000;
+
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM hh:mm aa");
+        Date date = new Date(System.currentTimeMillis());
+        this.timeString = df.format(date);
+        this.fcm_token = fcm_token;
+    }
+
     public String getFcm_token() {
         return fcm_token;
     }

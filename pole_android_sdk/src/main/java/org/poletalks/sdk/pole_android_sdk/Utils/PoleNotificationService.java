@@ -151,7 +151,6 @@ public class PoleNotificationService {
         } catch (Exception e){
             return true;
         }
-
     }
 
     public static void createNotification(String title, String content, String item_id, String item_type, Context mContext) {

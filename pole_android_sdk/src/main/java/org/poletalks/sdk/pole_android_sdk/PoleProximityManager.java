@@ -87,9 +87,12 @@ public class PoleProximityManager {
 
     private static void registerUser(Context context, String client_uid) {
         final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("client_uid", client_uid);
-        editor.apply();
+
+        if (client_uid != null){
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("client_uid", client_uid);
+            editor.apply();
+        }
 
         String fcm_token = pref.getString("fcm_token", "none");
         String pole_uid = pref.getString("pole_uid", "none");
@@ -103,7 +106,9 @@ public class PoleProximityManager {
                 UserProfile user = new UserProfile();
 
                 user.setClientapp_name("HUBILO");
-                user.setClientapp_uid(client_uid);
+                if (client_uid != null){
+                    user.setClientapp_uid(client_uid);
+                }
                 user.setDevice_type("ANDROID");
                 user.setFcm_token(fcm_token);
 
@@ -135,7 +140,9 @@ public class PoleProximityManager {
 
                 user.set_id(pole_uid);
                 user.setClientapp_name("HUBILO");
-                user.setClientapp_uid(client_uid);
+                if (client_uid != null){
+                    user.setClientapp_uid(client_uid);
+                }
                 user.setDevice_type("ANDROID");
                 user.setFcm_token(fcm_token);
 
@@ -186,9 +193,14 @@ public class PoleProximityManager {
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
         SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
         String user_id = pref.getString("pole_uid", "none");
-        String client_id = pref.getString("client_uid", "none");
+        String client_id = pref.getString("client_uid", null);
         mFirebaseHistoryReference = secondaryDatabase.getReference();
-        Queue queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+        Queue queue;
+        if (client_id == null){
+            queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+        } else {
+            queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+        }
         mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
     }
 
@@ -201,6 +213,10 @@ public class PoleProximityManager {
         });
     }
 
+    public static void stopScanning() {
+        proximityManager.stopScanning();
+    }
+
     public static void destroyScanning() {
         proximityManager.stopScanning();
         proximityManager.disconnect();
@@ -211,9 +227,12 @@ public class PoleProximityManager {
         JsonObject gson = new JsonParser().parse(String.valueOf(info)).getAsJsonObject();
 
         final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("client_uid", client_uid);
-        editor.apply();
+
+        if (client_uid != null){
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("client_uid", client_uid);
+            editor.apply();
+        }
 
         String fcm_token = pref.getString("fcm_token", "none");
         String pole_uid = pref.getString("pole_uid", "none");
@@ -227,7 +246,9 @@ public class PoleProximityManager {
 
                 JsonObject user = new JsonObject();
                 user.addProperty("clientapp_name", "HUBILO");
-                user.addProperty("clientapp_uid", client_uid);
+                if (client_uid != null){
+                    user.addProperty("clientapp_uid", client_uid);
+                }
                 user.addProperty("device_type", "ANDROID");
                 user.addProperty("fcm_token", fcm_token);
                 user.add("user_info", gson);
@@ -260,7 +281,9 @@ public class PoleProximityManager {
 
                 user.addProperty("_id", pole_uid);
                 user.addProperty("clientapp_name", "HUBILO");
-                user.addProperty("clientapp_uid", client_uid);
+                if (client_uid != null){
+                    user.addProperty("clientapp_uid", client_uid);
+                }
                 user.addProperty("device_type", "ANDROID");
                 user.addProperty("fcm_token", fcm_token);
                 user.add("user_info", gson);
