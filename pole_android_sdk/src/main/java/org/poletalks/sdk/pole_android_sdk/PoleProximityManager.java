@@ -86,89 +86,92 @@ public class PoleProximityManager {
     }
 
     private static void registerUser(Context context, String client_uid) {
-        final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
+        try {
+            final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
 
-        if (client_uid != null){
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("client_uid", client_uid);
-            editor.apply();
-        }
-
-        String fcm_token = pref.getString("fcm_token", "none");
-        String pole_uid = pref.getString("pole_uid", "none");
-
-        if (!fcm_token.equals("none") && CheckNetwork.isInternetAvailable(context)) {
-            if (pole_uid.equals("none")) {
-                // Create user
-                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
-                Retrofit retro = retrofitConfig.getRetro();
-                ApiInterface setprofile = retro.create(ApiInterface.class);
-                UserProfile user = new UserProfile();
-
-                user.setClientapp_name("HUBILO");
-                if (client_uid != null){
-                    user.setClientapp_uid(client_uid);
-                }
-                user.setDevice_type("ANDROID");
-                user.setFcm_token(fcm_token);
-
-                Call<CommonResponse> call = setprofile.createUser(user);
-                call.enqueue(new Callback<CommonResponse>() {
-                    @Override
-                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
-                        if (response.code() == 200) {
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("pole_uid", response.body().get_id());
-                            editor.apply();
-                        } else {
-                            Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonResponse> call, Throwable t)
-                    {
-                        Log.e("Create user error ", t.toString());
-                    }
-                });
-            } else {
-                // Update user
-                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
-                Retrofit retro = retrofitConfig.getRetro();
-                ApiInterface setprofile = retro.create(ApiInterface.class);
-                UserProfile user = new UserProfile();
-
-                user.set_id(pole_uid);
-                user.setClientapp_name("HUBILO");
-                if (client_uid != null){
-                    user.setClientapp_uid(client_uid);
-                }
-                user.setDevice_type("ANDROID");
-                user.setFcm_token(fcm_token);
-
-                Call<CommonResponse> call = setprofile.createUser(user);
-                call.enqueue(new Callback<CommonResponse>() {
-                    @Override
-                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)  {
-                        if (response.code() == 200){
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("pole_uid", response.body().get_id());
-                            editor.apply();
-                        } else {
-                            Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonResponse> call, Throwable t)
-                    {
-                        Log.e("Create user error ", t.toString());
-                    }
-                });
+            if (client_uid != null){
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("client_uid", client_uid);
+                editor.apply();
             }
 
-        }
+            String fcm_token = pref.getString("fcm_token", "none");
+            String pole_uid = pref.getString("pole_uid", "none");
 
+            if (!fcm_token.equals("none") && CheckNetwork.isInternetAvailable(context)) {
+                if (pole_uid.equals("none")) {
+                    // Create user
+                    RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+                    Retrofit retro = retrofitConfig.getRetro();
+                    ApiInterface setprofile = retro.create(ApiInterface.class);
+                    UserProfile user = new UserProfile();
+
+                    user.setClientapp_name("HUBILO");
+                    if (client_uid != null){
+                        user.setClientapp_uid(client_uid);
+                    }
+                    user.setDevice_type("ANDROID");
+                    user.setFcm_token(fcm_token);
+
+                    Call<CommonResponse> call = setprofile.createUser(user);
+                    call.enqueue(new Callback<CommonResponse>() {
+                        @Override
+                        public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                            if (response.code() == 200) {
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("pole_uid", response.body().get_id());
+                                editor.apply();
+                            } else {
+                                Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CommonResponse> call, Throwable t)
+                        {
+                            Log.e("Create user error ", t.toString());
+                        }
+                    });
+                } else {
+                    // Update user
+                    RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+                    Retrofit retro = retrofitConfig.getRetro();
+                    ApiInterface setprofile = retro.create(ApiInterface.class);
+                    UserProfile user = new UserProfile();
+
+                    user.set_id(pole_uid);
+                    user.setClientapp_name("HUBILO");
+                    if (client_uid != null){
+                        user.setClientapp_uid(client_uid);
+                    }
+                    user.setDevice_type("ANDROID");
+                    user.setFcm_token(fcm_token);
+
+                    Call<CommonResponse> call = setprofile.createUser(user);
+                    call.enqueue(new Callback<CommonResponse>() {
+                        @Override
+                        public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)  {
+                            if (response.code() == 200){
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("pole_uid", response.body().get_id());
+                                editor.apply();
+                            } else {
+                                Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CommonResponse> call, Throwable t)
+                        {
+                            Log.e("Create user error ", t.toString());
+                        }
+                    });
+                }
+
+            }
+        } catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 
 
@@ -176,43 +179,76 @@ public class PoleProximityManager {
         return new SimpleEddystoneListener() {
             @Override
             public void onEddystoneDiscovered(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
-                Log.e("Pole Enter ", eddystone.getUniqueId());
-//                PoleNotificationService.createNotification("Welcome to "+eddystone.getUniqueId(), "Hope you have an awesome time.", null, null, mContext);
-                setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), true, mContext);
+                try {
+                    if (eddystone != null){
+                        if (eddystone.getUniqueId() != null){
+                            setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), true, mContext);
+                        }
+                    }
+                } catch (Exception e){
+                    Log.e("Error", e.getMessage());
+                }
             }
 
             @Override
             public void onEddystoneLost(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
-                Log.e("Pole Exit ", eddystone.getUniqueId());
-//                PoleNotificationService.createNotification("Hope you had a great time!", "Please give us your feedback", null, null, mContext);
-                setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), false, mContext);
+                try {
+                    if (eddystone != null){
+                        if (eddystone.getUniqueId() != null){
+                            setInFirebase(eddystone.getUniqueId(), eddystone.getDistance(), false, mContext);
+                        }
+                    }
+                } catch (Exception e){
+                    Log.e("Error", e.getMessage());
+                }
+
             }
         };
     }
 
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
-        SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-        String user_id = pref.getString("pole_uid", "none");
-        String client_id = pref.getString("client_uid", null);
-        mFirebaseHistoryReference = secondaryDatabase.getReference();
-        Queue queue;
-        if (!pref.getString("fcm_token", "fcm_token").equals("fcm_token") && !user_id.equals("none")){
-            if (client_id == null){
-                queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
-            } else {
-                queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+        try {
+            SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
+            String user_id = pref.getString("pole_uid", "none");
+            String client_id = pref.getString("client_uid", null);
+            mFirebaseHistoryReference = secondaryDatabase.getReference();
+            Queue queue;
+            if (!pref.getString("fcm_token", "fcm_token").equals("fcm_token") && !user_id.equals("none")){
+                if (client_id == null){
+                    queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+                } else {
+                    queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
+                }
+                mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
             }
-            mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
+        } catch (Exception e){
+            Log.e("Error", e.getMessage());
         }
     }
 
     public static void startScanning() {
-        proximityManager.connect(new OnServiceReadyListener() {
-            @Override
-            public void onServiceReady() {
-                proximityManager.startScanning();
+        if (proximityManager != null) {
+            try {
+                proximityManager.connect(new OnServiceReadyListener() {
+                    @Override
+                    public void onServiceReady() {
+                        try {
+                            if (proximityManager.isConnected()){
+                                try {
+                                    proximityManager.startScanning();
+                                } catch (Exception e) {
+                                    Log.e("Error: ", "IllegalStateException");
+                                }
+                            }
+                        } catch (Exception e){
+                            Log.e("Error", e.getMessage());
+                        }
+                    }
+                });
+            } catch (Exception e){
+                Log.e("Error: ", "IllegalStateException");
             }
-        });
+        }
     }
 
     public static void stopScanning() {
@@ -220,97 +256,104 @@ public class PoleProximityManager {
     }
 
     public static void destroyScanning() {
-        proximityManager.stopScanning();
-        proximityManager.disconnect();
-        proximityManager = null;
+        if (proximityManager != null){
+            proximityManager.stopScanning();
+            proximityManager.disconnect();
+            proximityManager = null;
+        }
     }
 
     public static void setUserInfo(JSONObject info, Context context, String client_uid){
-        JsonObject gson = new JsonParser().parse(String.valueOf(info)).getAsJsonObject();
+        try {
+            JsonObject gson = new JsonParser().parse(String.valueOf(info)).getAsJsonObject();
 
-        final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
+            final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
 
-        if (client_uid != null){
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("client_uid", client_uid);
-            editor.apply();
-        }
-
-        String fcm_token = pref.getString("fcm_token", "none");
-        String pole_uid = pref.getString("pole_uid", "none");
-
-        if (!fcm_token.equals("none") && CheckNetwork.isInternetAvailable(context)) {
-            if (pole_uid.equals("none")) {
-                // Create user
-                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
-                Retrofit retro = retrofitConfig.getRetro();
-                ApiInterface setprofile = retro.create(ApiInterface.class);
-
-                JsonObject user = new JsonObject();
-                user.addProperty("clientapp_name", "HUBILO");
-                if (client_uid != null){
-                    user.addProperty("clientapp_uid", client_uid);
-                }
-                user.addProperty("device_type", "ANDROID");
-                user.addProperty("fcm_token", fcm_token);
-                user.add("user_info", gson);
-
-                Call<CommonResponse> call = setprofile.createUserFromJsonObject(user);
-                call.enqueue(new Callback<CommonResponse>() {
-                    @Override
-                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
-                        if (response.code() == 200) {
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("pole_uid", response.body().get_id());
-                            editor.apply();
-                        } else {
-                            Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonResponse> call, Throwable t)
-                    {
-                        Log.e("Create user error ", t.toString());
-                    }
-                });
-            } else {
-                // Update user
-                RetrofitConfig retrofitConfig = new RetrofitConfig(context);
-                Retrofit retro = retrofitConfig.getRetro();
-                ApiInterface setprofile = retro.create(ApiInterface.class);
-                JsonObject user = new JsonObject();
-
-                user.addProperty("_id", pole_uid);
-                user.addProperty("clientapp_name", "HUBILO");
-                if (client_uid != null){
-                    user.addProperty("clientapp_uid", client_uid);
-                }
-                user.addProperty("device_type", "ANDROID");
-                user.addProperty("fcm_token", fcm_token);
-                user.add("user_info", gson);
-
-                Call<CommonResponse> call = setprofile.createUserFromJsonObject(user);
-                call.enqueue(new Callback<CommonResponse>() {
-                    @Override
-                    public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)  {
-                        if (response.code() == 200){
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("pole_uid", response.body().get_id());
-                            editor.apply();
-                        } else {
-                            Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonResponse> call, Throwable t)
-                    {
-                        Log.e("Create user error ", t.toString());
-                    }
-                });
+            if (client_uid != null){
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("client_uid", client_uid);
+                editor.apply();
             }
 
+            String fcm_token = pref.getString("fcm_token", "none");
+            String pole_uid = pref.getString("pole_uid", "none");
+
+            if (!fcm_token.equals("none") && CheckNetwork.isInternetAvailable(context)) {
+                if (pole_uid.equals("none")) {
+                    // Create user
+                    RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+                    Retrofit retro = retrofitConfig.getRetro();
+                    ApiInterface setprofile = retro.create(ApiInterface.class);
+
+                    JsonObject user = new JsonObject();
+                    user.addProperty("clientapp_name", "HUBILO");
+                    if (client_uid != null){
+                        user.addProperty("clientapp_uid", client_uid);
+                    }
+                    user.addProperty("device_type", "ANDROID");
+                    user.addProperty("fcm_token", fcm_token);
+                    user.add("user_info", gson);
+
+                    Call<CommonResponse> call = setprofile.createUserFromJsonObject(user);
+                    call.enqueue(new Callback<CommonResponse>() {
+                        @Override
+                        public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                            if (response.code() == 200) {
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("pole_uid", response.body().get_id());
+                                editor.apply();
+                            } else {
+                                Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CommonResponse> call, Throwable t)
+                        {
+                            Log.e("Create user error ", t.toString());
+                        }
+                    });
+                } else {
+                    // Update user
+                    RetrofitConfig retrofitConfig = new RetrofitConfig(context);
+                    Retrofit retro = retrofitConfig.getRetro();
+                    ApiInterface setprofile = retro.create(ApiInterface.class);
+                    JsonObject user = new JsonObject();
+
+                    user.addProperty("_id", pole_uid);
+                    user.addProperty("clientapp_name", "HUBILO");
+                    if (client_uid != null){
+                        user.addProperty("clientapp_uid", client_uid);
+                    }
+                    user.addProperty("device_type", "ANDROID");
+                    user.addProperty("fcm_token", fcm_token);
+                    user.add("user_info", gson);
+
+                    Call<CommonResponse> call = setprofile.createUserFromJsonObject(user);
+                    call.enqueue(new Callback<CommonResponse>() {
+                        @Override
+                        public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response)  {
+                            if (response.code() == 200){
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("pole_uid", response.body().get_id());
+                                editor.apply();
+                            } else {
+                                Log.e("Create user error", "Status code: " + String.valueOf(response.code()));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CommonResponse> call, Throwable t)
+                        {
+                            Log.e("Create user error ", t.toString());
+                        }
+                    });
+                }
+
+            }
+        } catch (Exception e){
+            Log.e ("Error", e.getMessage());
         }
+
     }
 }
