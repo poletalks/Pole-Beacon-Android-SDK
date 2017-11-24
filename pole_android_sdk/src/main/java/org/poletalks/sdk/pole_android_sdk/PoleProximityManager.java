@@ -2,11 +2,14 @@ package org.poletalks.sdk.pole_android_sdk;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -54,6 +57,8 @@ public class PoleProximityManager {
     public static String TASKS = "beacon-logs-test";
     private static DatabaseReference mFirebaseHistoryReference;
     private static FirebaseDatabase secondaryDatabase;
+    private static BluetoothAdapter adapter;
+    private static boolean initialbBluetoothStatus = false;
 
 
     public static void onCreateBeacons(Context context, String uid) {
@@ -80,6 +85,42 @@ public class PoleProximityManager {
             secondaryDatabase = FirebaseDatabase.getInstance(secondary);
         } catch (Exception e){
             secondaryDatabase = FirebaseDatabase.getInstance();
+        }
+
+        try {
+            adapter = BluetoothAdapter.getDefaultAdapter();
+
+            if (adapter != null) {
+                if (adapter.isEnabled()) {
+                    initialbBluetoothStatus =true;
+                }
+            }
+
+            final Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.e("Bluetooth" , "Calling handler");
+                        if (adapter == null) {
+                            // Device does not support Bluetooth
+                        } else {
+                            if (adapter.isEnabled()) {
+                                if (!initialbBluetoothStatus){
+                                    startScanning();
+                                    Log.e("Bluetooth" , "Connected");
+                                }
+                            } else {
+                                handler.postDelayed(this, 10000);
+                            }
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+            }, 10000);
+        } catch (Exception e){
+            Log.e("ServiceConnection", "Leak");
         }
 
         registerUser(context, uid);
@@ -210,6 +251,11 @@ public class PoleProximityManager {
 
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
         try {
+            if (isEnter){
+                Log.e("Bluetooth Beacon ", "Discovered");
+            } else {
+                Log.e("Bluetooth Beacon ", "Lost");
+            }
             SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
             String user_id = pref.getString("pole_uid", "none");
             String client_id = pref.getString("client_uid", null);
