@@ -161,7 +161,6 @@ public class PoleNotificationService {
             Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
             resultIntent.putExtra("item_id", item_id);
             resultIntent.putExtra("item_type", item_type);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(mContext, notificationId, resultIntent, 0);
 
             Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
