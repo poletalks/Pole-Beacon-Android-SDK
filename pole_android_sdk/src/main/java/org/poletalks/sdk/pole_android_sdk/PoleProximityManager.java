@@ -112,6 +112,7 @@ public class PoleProximityManager {
                     }
                     user.setDevice_type("ANDROID");
                     user.setFcm_token(fcm_token);
+                    user.setVersion(2);
 
                     Call<CommonResponse> call = setprofile.createUser(user);
                     call.enqueue(new Callback<CommonResponse>() {
@@ -146,6 +147,7 @@ public class PoleProximityManager {
                     }
                     user.setDevice_type("ANDROID");
                     user.setFcm_token(fcm_token);
+                    user.setVersion(2);
 
                     Call<CommonResponse> call = setprofile.createUser(user);
                     call.enqueue(new Callback<CommonResponse>() {
@@ -292,6 +294,7 @@ public class PoleProximityManager {
                     }
                     user.addProperty("device_type", "ANDROID");
                     user.addProperty("fcm_token", fcm_token);
+                    user.addProperty("version", 2);
                     user.add("user_info", gson);
 
                     Call<CommonResponse> call = setprofile.createUserFromJsonObject(user);
@@ -327,6 +330,7 @@ public class PoleProximityManager {
                     }
                     user.addProperty("device_type", "ANDROID");
                     user.addProperty("fcm_token", fcm_token);
+                    user.addProperty("version", 2);
                     user.add("user_info", gson);
 
                     Call<CommonResponse> call = setprofile.createUserFromJsonObject(user);

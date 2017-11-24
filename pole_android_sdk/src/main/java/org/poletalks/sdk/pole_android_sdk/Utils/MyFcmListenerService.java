@@ -41,6 +41,9 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         String type = (String) data.get("type");
         String title = (String) data.get("title");
         String content = (String) data.get("content");
+        String item_id = (String) data.get("item_id");
+        String item_type = (String) data.get("item_type");
+
         channelName = (String) data.get("channelName");
         if (data.get("description") != null) {
             String description = (String) data.get("description");
@@ -50,6 +53,6 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         }
 
 //        createNotification(title, content);
-        PoleNotificationService.createNotification(title, content, null, null, mContext);
+        PoleNotificationService.createNotification(title, content, item_id, item_type, mContext);
     }
 }

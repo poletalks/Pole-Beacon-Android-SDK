@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="Sliding scale of 1-5 of how effective the session was"
         android:textColor="#384950"
         android:layout_marginTop="20dp"

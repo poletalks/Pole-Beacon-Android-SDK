@@ -9,6 +9,15 @@ import com.google.gson.JsonObject;
 public class UserProfile {
     private String profile_image, clientapp_name, clientapp_uid, fcm_token, device_type, _id;
     private JsonObject user_info;
+    private int version;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public JsonObject getUser_info() {
         return user_info;

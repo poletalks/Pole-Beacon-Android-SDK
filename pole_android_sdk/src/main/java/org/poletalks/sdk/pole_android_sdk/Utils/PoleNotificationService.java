@@ -67,6 +67,7 @@ public class PoleNotificationService {
 
                 user.setClientapp_name("HUBILO");
                 user.setDevice_type("ANDROID");
+                user.setVersion(2);
                 user.setFcm_token(refreshedToken);
 
                 Call<CommonResponse> call = setprofile.createUser(user);
@@ -95,6 +96,7 @@ public class PoleNotificationService {
 
                 user.setClientapp_name("HUBILO");
                 user.setDevice_type("ANDROID");
+                user.setVersion(2);
                 user.setFcm_token(refreshedToken);
                 user.set_id(pole_uid);
 
