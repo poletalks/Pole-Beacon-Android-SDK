@@ -156,15 +156,15 @@ public class PoleNotificationService {
     public static void createNotification(String title, String content, String item_id, String item_type, Context mContext) {
         try {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
+            Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() % 4234)));
 
             Intent resultIntent = new Intent(mContext, FeedbackSDKActivity.class);
             resultIntent.putExtra("item_id", item_id);
             resultIntent.putExtra("item_type", item_type);
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, resultIntent, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, notificationId, resultIntent, 0);
 
             Bitmap icon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.brandlog);
-            Integer notificationId = Integer.valueOf(String.valueOf((System.currentTimeMillis() % 4234)));
 
             mBuilder.setSmallIcon(R.drawable.small_icon)
                     .setLargeIcon(icon)
