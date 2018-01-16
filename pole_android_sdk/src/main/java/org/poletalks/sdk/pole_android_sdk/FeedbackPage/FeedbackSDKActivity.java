@@ -253,7 +253,7 @@ public class FeedbackSDKActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.parseColor("#158570"));
+            window.setStatusBarColor(Color.parseColor("#C9120D"));
         }
     }
 

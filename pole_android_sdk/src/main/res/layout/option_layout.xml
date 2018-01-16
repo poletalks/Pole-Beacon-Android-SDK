@@ -21,7 +21,7 @@
         android:id="@+id/option_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#384950"
+        android:textColor="#d12633"
         android:textSize="12dp"
         android:layout_marginLeft="5dp"
         android:layout_gravity="center_vertical"/>

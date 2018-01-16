@@ -12,7 +12,7 @@
         android:text="FEEDBACK"
         android:textSize="18dp"
         android:textColor="#ffffff"
-        android:background="#158570"
+        android:background="#d12633"
         android:textAlignment="center"
         android:gravity="center"/>
 
