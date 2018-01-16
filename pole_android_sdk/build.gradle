@@ -35,12 +35,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
     compile 'com.github.lawloretienne:discreteslider:0.0.9'
 
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
-    compile 'com.google.firebase:firebase-database:10.0.1'
-    compile 'com.google.firebase:firebase-storage:10.0.1'
-    compile 'com.firebaseui:firebase-ui-database:0.4.0'
-    compile 'com.google.firebase:firebase-analytics:10.0.1'
-    compile 'com.google.firebase:firebase-core:10.0.1'
 
     testCompile 'junit:junit:4.12'
 }

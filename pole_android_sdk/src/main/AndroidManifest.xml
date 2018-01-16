@@ -20,18 +20,6 @@
             android:name="com.kontakt.sdk.android.ble.service.ProximityService"
             android:exported="false" />
 
-        <service android:name=".Utils.MyFcmListenerService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".Utils.MyInstanceIDListenerService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name="org.poletalks.sdk.pole_android_sdk.FeedbackPage.FeedbackSDKActivity"
             android:screenOrientation="portrait">
