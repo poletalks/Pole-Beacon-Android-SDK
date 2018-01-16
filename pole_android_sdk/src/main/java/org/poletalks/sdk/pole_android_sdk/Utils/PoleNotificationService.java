@@ -13,9 +13,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.RemoteMessage;
-
 import org.poletalks.sdk.pole_android_sdk.FeedbackPage.FeedbackSDKActivity;
 import org.poletalks.sdk.pole_android_sdk.Model.CommonResponse;
 import org.poletalks.sdk.pole_android_sdk.Model.UserProfile;
@@ -36,19 +33,6 @@ import retrofit2.Retrofit;
  */
 
 public class PoleNotificationService {
-
-    public static String getToken(FirebaseInstanceId firebaseInstanceId, Context context) {
-        String refreshedToken = null;
-        try {
-            refreshedToken = firebaseInstanceId.getToken(Config.fcm_sender_id, "FCM");
-            Log.d("MyInstanceId", "sdk:Refreshed token: " + refreshedToken);
-            sendRegistrationToServer(refreshedToken, context);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // TODO: Implement this method to send any registration to your app's servers.
-        return (refreshedToken);
-    }
 
     static void sendRegistrationToServer(final String refreshedToken, final Context context) {
         final SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
@@ -122,38 +106,7 @@ public class PoleNotificationService {
         }
     }
 
-    public static boolean onMessageReceived(RemoteMessage message, Context mContext) {
-        try {
-            if (message == null){
-                return true;
-            }
 
-            Map data = message.getData();
-
-            if (data == null){
-                return true;
-            }
-
-            String source = (String) data.get("source");
-            String content = (String) data.get("content");
-            String title = (String) data.get("title");
-            String item_id = (String) data.get("item_id");
-            String item_type = (String) data.get("item_type");
-
-            if (source == null){
-                return true;
-            }
-
-            if (source.equals("POLETALKS")){
-                createNotification(title, content, item_id, item_type, mContext);
-                return false;
-            } else {
-                return true;
-            }
-        } catch (Exception e){
-            return true;
-        }
-    }
 
     public static void createNotification(String title, String content, String item_id, String item_type, Context mContext) {
         try {

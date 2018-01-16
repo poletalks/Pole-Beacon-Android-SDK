@@ -16,8 +16,6 @@ import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kontakt.sdk.android.ble.connection.OnServiceReadyListener;
@@ -55,8 +53,6 @@ public class PoleProximityManager {
     private static Context mContext;
     public static ProximityManager proximityManager;
     public static String TASKS = "beacon-logs-test";
-    private static DatabaseReference mFirebaseHistoryReference;
-    private static FirebaseDatabase secondaryDatabase;
     private static BluetoothAdapter adapter;
     private static boolean initialbBluetoothStatus = false;
 
@@ -68,24 +64,6 @@ public class PoleProximityManager {
         proximityManager = ProximityManagerFactory.create(mContext);
         proximityManager.setEddystoneListener(createEddystoneListener(mContext));
 
-        try {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setApplicationId(Config.firebase_application_id) // Required for Analytics.
-                    .setApiKey(Config.firebase_api_key) // Required for Auth.
-                    .setDatabaseUrl(Config.firebase_db_url) // Required for RTDB.
-                    .build();
-
-            // Initialize with secondary app.
-            FirebaseApp.initializeApp(context, options, "secondary");
-
-            // Retrieve secondary app.
-            FirebaseApp secondary = FirebaseApp.getInstance("secondary");
-
-            // Get the database for the other app.
-            secondaryDatabase = FirebaseDatabase.getInstance(secondary);
-        } catch (Exception e){
-            secondaryDatabase = FirebaseDatabase.getInstance();
-        }
 
         try {
             adapter = BluetoothAdapter.getDefaultAdapter();
@@ -250,28 +228,7 @@ public class PoleProximityManager {
     }
 
     private static void setInFirebase(String beacon_id, double distance, boolean isEnter, Context context) {
-        try {
-            if (isEnter){
-                Log.e("Bluetooth Beacon ", "Discovered");
-            } else {
-                Log.e("Bluetooth Beacon ", "Lost");
-            }
-            SharedPreferences pref = context.getSharedPreferences("polePref", Context.MODE_PRIVATE);
-            String user_id = pref.getString("pole_uid", "none");
-            String client_id = pref.getString("client_uid", null);
-            mFirebaseHistoryReference = secondaryDatabase.getReference();
-            Queue queue;
-            if (!pref.getString("fcm_token", "fcm_token").equals("fcm_token") && !user_id.equals("none")){
-                if (client_id == null){
-                    queue = new Queue(beacon_id, user_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
-                } else {
-                    queue = new Queue(beacon_id, user_id, client_id, distance, isEnter, pref.getString("fcm_token", "fcm_token"));
-                }
-                mFirebaseHistoryReference.child(TASKS).child("tasks").push().setValue(queue);
-            }
-        } catch (Exception e){
-            Log.e("Error", e.getMessage());
-        }
+
     }
 
     public static void startScanning() {

@@ -126,7 +126,7 @@ public class FeedbackSDKActivity extends AppCompatActivity {
             ApiInterface apiInterface = retro.create(ApiInterface.class);
 
             FeedbackResponse feedbackResponse = new FeedbackResponse();
-            feedbackResponse.setUser_id(pref.getString("pole_uid", "none"));
+//            feedbackResponse.setUser_id(pref.getString("pole_uid", "none"));
             ArrayList<QuestionResponse> questionResponses = new ArrayList<>();
             for (FeedbackQuestion item :feedbackQuestions){
                 QuestionResponse response = new QuestionResponse();
